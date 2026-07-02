@@ -426,26 +426,6 @@ public final class MinecraftEventHandler {
 
 		// ===== Account Linking Response Events =====
 
-		EventManager.register(CoreEvents.LinkCodeResponseEvent.class, event -> {
-			if (serverInstance == null) return;
-
-			// Find the player and notify them
-			serverInstance.execute(() -> {
-				try {
-					UUID uuid = UUID.fromString(event.playerUuid());
-					ServerPlayer player = serverInstance.getPlayerList().getPlayer(uuid);
-					if (player != null) {
-						if (event.alreadyLinked()) {
-							player.sendSystemMessage(buildAlreadyLinkedMessage(event.discordName()));
-						} else if (event.code() != null) {
-							player.sendSystemMessage(buildNotLinkedMessage(event.code()));
-						}
-					}
-				} catch (Exception ignored) {
-				}
-			});
-		});
-
 		EventManager.register(CoreEvents.UnlinkResponseEvent.class, event -> {
 			if (serverInstance == null) return;
 
